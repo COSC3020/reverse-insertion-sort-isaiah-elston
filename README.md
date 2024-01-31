@@ -36,3 +36,28 @@ constant factors.
 Describe your reasoning and the conclusion you've come to. Your reasoning is
 most important -- you can easily find the answer, but you need to demonstrate
 that you've understood the concept. Add your answer to this markdown file.
+
+### Answer
+
+If the best case of insertion sort is a "pre-sorted" array, and the worst case is a reverse sorted array, the average case would naturally have to fall inbetween the two. To be more specific, the input array will not be pre-sorted but it also will not be reverse sorted.
+
+The best case would be whenever the nested for loop doesn't have to run whatsoever, hence pre-sorted. Thus, the function will simply have to parse through the array "$n$" times and be done.
+
+On the other hand, a reverse sorted array will require the inner loop to parse through the entire length of the array to check each element, and then parse through the entire array **again** in order to get the last element sorted. Therefore, it will have to parse through the entire array twice, or "$n \times n =  n^2$" times. 
+
+Knowing that the average case has to land in-between those two outcomes, we can first discern how it could work in practice to help us derive the asymptotic $\Theta$ bound. 
+
+Let's suppose that in the average case, the inner for-loop has to parse precisely half of the array. The time taken would be represented as "$\frac{n}{2}$" since "$n$" represents the arbitrary size of the input array. Moreover, since the inner loop only ever initiates as the outer loop is running, we would need to add a leading coefficient of "$n$" to the time function of the inner loop. 
+
+$$n(\frac{n}{2}) = \frac{n^2}{2}$$
+
+Of course, we need to generalize that example, but before I do too much theoretical work I would like to point out that regardless of the denominator, the numerator will remain the same. Asymptotically speaking, anytime the inner for-loop is initiated even once, the numerator will always become $n^2$.
+
+$$ \begin{align}
+\mathrm{T}(n) & = n(\frac{n}{\text{any constant from 1 to } n}) \\
+\implies \mathrm{T}(n) & = \frac{n^2}{\text{any constant from 1 to } n} \\
+\implies \mathrm{T}(n) & \in \Theta(n^2)
+\end{align}
+$$
+
+No matter what the denominator may be, it can never be greater than or equal to the numerator of $n^2$, which means that the average case would have to be $\Theta(n^2)$ for insertion sort. This unfortunately means that the average case is equivalent to the worst case for this algorithm on an asymptotic scale.
